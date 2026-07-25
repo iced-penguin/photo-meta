@@ -1,0 +1,12 @@
+[project]
+name = "photo-cli"
+version = "0.1.0"
+description = "CLI for writing image description metadata with exiftool"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pytest>=9.1.1",
+]
+
+[project.scripts]
+photo-cli = "main:main"
