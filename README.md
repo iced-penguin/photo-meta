@@ -26,3 +26,17 @@ uv run python main.py meta --description "Great photo." "img*.jpg"
 ```bash
 pip install -e .
 ```
+
+## Test
+
+Run the test suite with:
+
+```bash
+pytest
+```
+
+If you are using uv, you can also run:
+
+```bash
+uv run pytest
+```
