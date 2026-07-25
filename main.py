@@ -46,6 +46,10 @@ def write_metadata(files: List[Path], description: str) -> None:
     args = [
         "exiftool",
         "-overwrite_original",
+        "-charset",
+        "UTF8",
+        "-charset",
+        "IPTC=UTF8",
         f"-EXIF:ImageDescription={description}",
         f"-IPTC:Caption-Abstract={description}",
         f"-XMP-dc:Description={description}",

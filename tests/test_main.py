@@ -56,3 +56,25 @@ def test_meta_cli_description_overrides_config(tmp_path, monkeypatch):
 
     assert main.main() == 0
     assert calls["description"] == "from cli"
+
+
+def test_write_metadata_uses_utf8_charset(monkeypatch):
+    captured = {}
+
+    def fake_run(args, check):
+        captured["args"] = args
+        captured["check"] = check
+
+    monkeypatch.setattr(main.subprocess, "run", fake_run)
+
+    main.write_metadata([Path("sample.jpg")], "黒部峡谷トロッコ電車")
+
+    assert captured["args"][0:6] == [
+        "exiftool",
+        "-overwrite_original",
+        "-charset",
+        "UTF8",
+        "-charset",
+        "IPTC=UTF8",
+    ]
+    assert captured["check"] is True
