@@ -20,3 +20,9 @@ You can also override the config value from the command line:
 ```bash
 uv run python main.py meta --description "Great photo." "img*.jpg"
 ```
+
+## Local install
+
+```bash
+pip install -e .
+```
