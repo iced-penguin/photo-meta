@@ -9,12 +9,34 @@ A small Python CLI for writing description metadata to image files via exiftool.
 
 ## Usage
 
+Write metadata with the `meta` subcommand:
+
 ```bash
-uv run python main.py "path/to/*.jpg"
+uv run python main.py meta --config photo-cli.toml "img*.jpg"
 ```
 
-You can also pass explicit files:
+You can also override the config value from the command line:
 
 ```bash
-uv run python main.py "img1.jpg" "img2.jpg"
+uv run python main.py meta --description "Great photo." "img*.jpg"
+```
+
+## Local install
+
+```bash
+pip install -e .
+```
+
+## Test
+
+Run the test suite with:
+
+```bash
+pytest
+```
+
+If you are using uv, you can also run:
+
+```bash
+uv run pytest
 ```
