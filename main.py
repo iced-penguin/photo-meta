@@ -57,7 +57,11 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Write description metadata to one or more image files using exiftool"
     )
-    parser.add_argument("patterns", nargs="+", help="File path or glob pattern")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    meta_parser = subparsers.add_parser("meta", help="Write metadata to image files")
+    meta_parser.add_argument("patterns", nargs="+", help="File path or glob pattern")
+
     return parser.parse_args()
 
 
@@ -66,12 +70,14 @@ def main() -> int:
 
     try:
         ensure_exiftool()
-        files = find_files(args.patterns)
-        if not files:
-            print("No files to process.", file=sys.stderr)
-            return 1
-        write_metadata(files, DESCRIPTION)
-        return 0
+        if args.command == "meta":
+            files = find_files(args.patterns)
+            if not files:
+                print("No files to process.", file=sys.stderr)
+                return 1
+            write_metadata(files, DESCRIPTION)
+            return 0
+        raise RuntimeError(f"Unknown command: {args.command}")
     except FileNotFoundError as exc:
         print(str(exc), file=sys.stderr)
         return 1
