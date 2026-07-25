@@ -78,3 +78,47 @@ def test_write_metadata_uses_utf8_charset(monkeypatch):
         "IPTC=UTF8",
     ]
     assert captured["check"] is True
+
+
+def test_show_metadata_uses_utf8_charset(monkeypatch):
+    captured = {}
+
+    def fake_run(args, check):
+        captured["args"] = args
+        captured["check"] = check
+
+    monkeypatch.setattr(main.subprocess, "run", fake_run)
+
+    main.show_metadata([Path("sample.jpg")])
+
+    assert captured["args"][0:6] == [
+        "exiftool",
+        "-charset",
+        "UTF8",
+        "-charset",
+        "IPTC=UTF8",
+        "-Description",
+    ]
+    assert captured["check"] is True
+
+
+def test_show_metadata_all(monkeypatch):
+    captured = {}
+
+    def fake_run(args, check):
+        captured["args"] = args
+        captured["check"] = check
+
+    monkeypatch.setattr(main.subprocess, "run", fake_run)
+
+    main.show_metadata([Path("sample.jpg")], show_all=True)
+
+    assert captured["args"][0:5] == [
+        "exiftool",
+        "-charset",
+        "UTF8",
+        "-charset",
+        "IPTC=UTF8",
+    ]
+    assert captured["args"][-1] == "sample.jpg"
+    assert captured["check"] is True

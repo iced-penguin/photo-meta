@@ -59,6 +59,20 @@ def write_metadata(files: List[Path], description: str) -> None:
     subprocess.run(args, check=True)
 
 
+def show_metadata(files: List[Path], show_all: bool = False) -> None:
+    args = [
+        "exiftool",
+        "-charset",
+        "UTF8",
+        "-charset",
+        "IPTC=UTF8",  # 文字化け防止
+    ]
+    if not show_all:
+        args.append("-Description")
+    args.extend(str(path) for path in files)
+    subprocess.run(args, check=True)
+
+
 def load_description_from_config(config_path: Optional[Path] = None) -> Optional[str]:
     target_path = config_path or Path(DEFAULT_CONFIG_NAME)
     if not target_path.exists():
@@ -95,6 +109,14 @@ def parse_args() -> argparse.Namespace:
         help="Description to write. Overrides the value in the config file.",
     )
 
+    show_parser = subparsers.add_parser("show", help="Show metadata from image files")
+    show_parser.add_argument("patterns", nargs="+", help="File path or glob pattern")
+    show_parser.add_argument(
+        "--all",
+        action="store_true",
+        help="Show all metadata instead of only the Description field",
+    )
+
     return parser.parse_args()
 
 
@@ -115,6 +137,13 @@ def main() -> int:
                 print("No files to process.", file=sys.stderr)
                 return 1
             write_metadata(files, description)
+            return 0
+        if args.command == "show":
+            files = find_files(args.patterns)
+            if not files:
+                print("No files to process.", file=sys.stderr)
+                return 1
+            show_metadata(files, show_all=args.all)
             return 0
         raise RuntimeError(f"Unknown command: {args.command}")
     except FileNotFoundError as exc:
