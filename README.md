@@ -1,4 +1,4 @@
-# photo-cli
+# photo-meta
 
 A small Python CLI for writing description metadata to image files via exiftool.
 
@@ -12,7 +12,7 @@ A small Python CLI for writing description metadata to image files via exiftool.
 Write metadata with the `meta` subcommand:
 
 ```bash
-uv run python main.py meta --config photo-cli.toml "img*.jpg"
+uv run python main.py meta --config photo-meta.toml "img*.jpg"
 ```
 
 You can also override the config value from the command line:

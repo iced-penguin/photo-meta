@@ -11,7 +11,7 @@ from typing import List, Optional
 
 
 DESCRIPTION = "サンプルの説明です"
-DEFAULT_CONFIG_NAME = "photo-cli.toml"
+DEFAULT_CONFIG_NAME = "photo-meta.toml"
 
 
 def find_files(patterns: List[str]) -> List[Path]:
@@ -81,7 +81,7 @@ def load_description_from_config(config_path: Optional[Path] = None) -> Optional
     with target_path.open("rb") as fh:
         config = tomllib.load(fh)
 
-    section = config.get("photo-cli") if isinstance(config, dict) else None
+    section = config.get("photo-meta") if isinstance(config, dict) else None
     if isinstance(section, dict):
         description = section.get("description")
         if isinstance(description, str) and description.strip():
@@ -101,7 +101,7 @@ def parse_args() -> argparse.Namespace:
         "--config",
         type=Path,
         default=None,
-        help="Path to a TOML config file (default: photo-cli.toml in the current directory)",
+        help="Path to a TOML config file (default: photo-meta.toml in the current directory)",
     )
     meta_parser.add_argument(
         "--description",

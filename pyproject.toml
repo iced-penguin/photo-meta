@@ -1,5 +1,5 @@
 [project]
-name = "photo-cli"
+name = "photo-meta"
 version = "0.1.0"
 description = "CLI for writing image description metadata with exiftool"
 readme = "README.md"
@@ -9,4 +9,4 @@ dependencies = [
 ]
 
 [project.scripts]
-photo-cli = "main:main"
+photo-meta = "main:main"
