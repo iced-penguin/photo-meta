@@ -5,8 +5,8 @@ import main
 
 
 def test_meta_reads_description_from_config(tmp_path, monkeypatch):
-    config_file = tmp_path / "photo-cli.toml"
-    config_file.write_text('[photo-cli]\ndescription = "from config"\n', encoding="utf-8")
+    config_file = tmp_path / "photo-meta.toml"
+    config_file.write_text('[photo-meta]\ndescription = "from config"\n', encoding="utf-8")
 
     calls = {}
 
@@ -20,7 +20,7 @@ def test_meta_reads_description_from_config(tmp_path, monkeypatch):
     monkeypatch.setattr(
         sys,
         "argv",
-        ["photo-cli", "meta", "--config", str(config_file), "sample.jpg"],
+        ["photo-meta", "meta", "--config", str(config_file), "sample.jpg"],
     )
 
     assert main.main() == 0
@@ -28,8 +28,8 @@ def test_meta_reads_description_from_config(tmp_path, monkeypatch):
 
 
 def test_meta_cli_description_overrides_config(tmp_path, monkeypatch):
-    config_file = tmp_path / "photo-cli.toml"
-    config_file.write_text('[photo-cli]\ndescription = "from config"\n', encoding="utf-8")
+    config_file = tmp_path / "photo-meta.toml"
+    config_file.write_text('[photo-meta]\ndescription = "from config"\n', encoding="utf-8")
 
     calls = {}
 
@@ -44,7 +44,7 @@ def test_meta_cli_description_overrides_config(tmp_path, monkeypatch):
         sys,
         "argv",
         [
-            "photo-cli",
+            "photo-meta",
             "meta",
             "--config",
             str(config_file),

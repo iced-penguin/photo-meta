@@ -30,7 +30,7 @@ wheels = [
 ]
 
 [[package]]
-name = "photo-cli"
+name = "photo-meta"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
